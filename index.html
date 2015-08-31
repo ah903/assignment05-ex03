@@ -1,0 +1,25 @@
+<!doctype html>
+<html>
+<head>
+	<title>Routing Demo</title>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+</head>
+<body ng-app="RoutingApp">
+	<div class="container" controller="RoutingController">
+		<nav>
+			<a href="#/home">Home</a>
+			<a href="#/about">About</a>
+			<a href="#/contact">Contact</a>
+		</nav>
+		<div ng-view>
+			
+		</div>
+	</div>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.5/angular.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.5/angular-route.min.js"></script>
+	<script src="public/routing/routingApp.js"></script>
+</body>
+</html>
