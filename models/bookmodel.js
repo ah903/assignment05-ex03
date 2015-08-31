@@ -6,6 +6,7 @@ var BookSchema = new mongoose.Schema({
 	title:{type:String, required:true},
 	published:{type:Number,required:true},
 	author:{type:String, required:true},
+	favourite:{type:Boolean, default:false},
 	created:{type:Date, default:Date.now}	
 },{collection:"books"});
 

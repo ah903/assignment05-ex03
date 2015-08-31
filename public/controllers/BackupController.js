@@ -1,10 +1,10 @@
-angular.module('RoutingApp').controller("BooksController",function($scope, $http, DataFactory){
+angular.module('RoutingApp').controller("BooksController",function($scope, $http){
   
   $scope.title="Books";           // Set the Page Title
   $scope.sortType="title";        // Set the default sort column
   $scope.sortReverse=false;       // Set the default sort order
 
-  DataFactory.getBooks()
+  $http.get("/api/books")
   .success(function(response){
     $scope.Books=response;
   });
@@ -12,7 +12,7 @@ angular.module('RoutingApp').controller("BooksController",function($scope, $http
   $scope.AddBook=function(newBook){
     
     if(!newBook) return;
-    DataFactory.addBook(newBook)
+    $http.post("/api/books",newBook)
     .success(function(response){
       $scope.Books.push(response);
       $scope.newBook=null;
@@ -20,7 +20,7 @@ angular.module('RoutingApp').controller("BooksController",function($scope, $http
   };
 
   $scope.RemoveBook = function(book){ 
-    DataFactory.removeBook(book)
+    $http.delete("/api/books/" + book._id)
     .success(function(response){
       $scope.Books=response;
     });
@@ -28,13 +28,13 @@ angular.module('RoutingApp').controller("BooksController",function($scope, $http
 
   $scope.Search = function(){
     if(!$scope.searchTerm){
-      DataFactory.getBooks()
+      $http.get("/api/books")
       .success(function(response){
         $scope.Books=response;
       });
       return;
     } 
-    DataFactory.search($scope.searchTerm )
+    $http.get("/api/search/" + $scope.searchTerm)
     .success(function(response){
       $scope.Books=response;  
     });
