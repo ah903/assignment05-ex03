@@ -49,17 +49,43 @@ app.get("/api/search/:term",function(req, res, next){
 	//});
 });
 
+//Get Favourite Books
+app.get("/api/favourites",function(req, res, next){
+	Book.find({favourite:true}).sort({title:1}).exec(function(err,data){
+		if(err) console.log(err);
+		res.status(200).json(data);
+	});
+});
+
 //Save a New Book
 app.post("/api/books",function(req, res, next){
 	var newBook = new Book();
 	newBook.title = req.body.title;
 	newBook.published = req.body.published;
+	newBook.favourite = req.body.favourite;
 	newBook.author = req.body.author;
 	newBook.save(function(err, data){
 		if(err) console.log(err);
 		res.status(200).json(data);
+	});	
+});
+
+//Update a Book
+app.put("/api/books/:id",function(req, res, next){
+
+	Book.findById(req.params.id, function(err,book){
+		if(err) console.log(err);
+		res.send(err);
+		console.log("Found Object " + book._id);
+		book.title = req.body.title;
+		book.published = req.body.published;
+		book.favourite = req.body.favourite;
+		book.author = req.body.author;
+		book.save(function(err, data){
+			if(err) console.log(err);
+			res.status(200).json(data);
+		});	
 	});
-	
 });
 
 //Delete a Book
