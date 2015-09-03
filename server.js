@@ -1,11 +1,14 @@
 var express = require("express");
 var bodyparser=require("body-parser");
+var cookieparser=require("cookie-parser");
 var logger=require("morgan");
 var Book = require("./models/bookmodel");
 
 var app=express();
+
 app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({extended:true}));
+app.use(cookieparser());
 app.use(logger("combined"));
 
 //Serve Static Content
@@ -75,7 +78,6 @@ app.put("/api/books/:id",function(req, res, next){
 
 	Book.findById(req.params.id, function(err,book){
 		if(err) console.log(err);
-		res.send(err);
 		console.log("Found Object " + book._id);
 		book.title = req.body.title;
 		book.published = req.body.published;
@@ -83,7 +85,7 @@ app.put("/api/books/:id",function(req, res, next){
 		book.author = req.body.author;
 		book.save(function(err, data){
 			if(err) console.log(err);
-			res.status(200).json(data);
+			res.json(data);
 		});	
 	});
 });
