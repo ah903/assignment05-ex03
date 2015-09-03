@@ -43,7 +43,7 @@
 	</thead>
 
 	<tbody>
-		<tr ng-repeat="book in Books | orderBy:sortType:sortReverse">
+		<tr ng-repeat="book in Books | filter:searchTerm | orderBy:sortType:sortReverse">
 			<td><strong>{{book.title}}</strong></td>
 			<td>{{book.published}}</td>
 			<td>{{book.author}}</td>
